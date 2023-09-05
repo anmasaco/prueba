@@ -1,4 +1,5 @@
 import React from 'react';
+import "../css/CharacterPage.css"
 
 const CharacterOrigin = ({
     image, 
@@ -22,4 +23,3 @@ const CharacterOrigin = ({
 }
  
 export default CharacterOrigin;
-
