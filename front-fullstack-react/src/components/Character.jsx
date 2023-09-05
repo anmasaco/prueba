@@ -1,31 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-const Character = ({
-    image,
-    name,
-    status,
-    species,
-    gender,
-    originUrl,
-}) => {
+const Character = ({ image, name, status, species, gender, originUrl }) => {
+  const [characterData, setCharacterData] = useState(null);
 
+  useEffect(() => {
+    // Realizar una solicitud GET a la API aquí
+    fetch('https://rickandmortyapi.com/api/character?page=2')
+      .then((response) => response.json())
+      .then((data) => {
+        setCharacterData(data); // Actualizar el estado con los datos de la API
+      })
+      .catch((error) => {
+        console.error('Error al obtener los datos de la API', error);
+      });
+  }, []); // La dependencia vacía asegura que esto solo se ejecute una vez al montar el componente
 
-    return ( 
+  return (
+    <div>
+      {characterData ? (
         <>
-        <div className="card" style={{width: '18rem', margin: '20px' }}>
-            <img src={image} className="card-img-top" alt="..."/>
-            <div className="card-body">
-                <h5 className="card-title">{name}</h5>
-                <p className="card-text"><b>Status: </b> {status}</p>
-                <p className="card-text"><b>Specie: </b> {species}</p>
-                <p className="card-text"><b>Gender: </b> {gender}</p>
-                {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
-                <Link className="btn btn-primary" to='/origin' state={{ name, image, originUrl }} >Ver Origen</Link>
-            </div>
-        </div>
+          <img src={image} alt={name} />
+          <h2>{name}</h2>
+          <p>Status: {status}</p>
+          <p>Species: {species}</p>
+          <p>Gender: {gender}</p>
+          <a href={originUrl}>Origin</a>
         </>
-     );
-}
- 
+      ) : (
+        <p>Cargando datos del personaje...</p>
+      )}
+    </div>
+  );
+};
+
 export default Character;

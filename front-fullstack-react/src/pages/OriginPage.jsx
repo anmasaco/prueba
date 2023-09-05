@@ -1,9 +1,10 @@
 const OriginPage = () => {
-    return ( 
-        <>
-           Origin Page
-        </>
-     );
-}
+  return (
+    <>
+     Origin Page
+    </>
+   )
+ }
  
-export default OriginPage;
+ export default OriginPage;
+ 
